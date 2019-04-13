@@ -9,4 +9,13 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),au
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
+
+
+
+
+
+
+
 @app.route('/')
+def index():
+    return form
