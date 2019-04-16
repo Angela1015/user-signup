@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -35,6 +35,15 @@ user_signup_form = """<!doctype html>
 def display_signup():
     return user_signup_form.format(username = "",username_error = "",password = "",password_error = "",verify_password = "",
     verify_password_error = "",email = "",email_error = "")
+
+@app.route("/validate-signup", methods = ['POST'])
+def validate_form():
+
+    username = request.form['username']
+    password = request.form['password']
+    verify_password = request.form['verify_password']
+    email = request.form['email']
+
 
 app.run()
 
