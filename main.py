@@ -49,17 +49,17 @@ def validate_form():
     verify_password_error = ""
     email_error = ""
 
-    if username =="":
+    if not username:
         username_error = "Please enter a name"
         username = ""
     else:
         if len(username)>20 or len(username)<3:
             username_error = "Username must be between 3 and 20 characters"
-            username = ""
+            username =""
 
-    if password =="":
+    if not password:
         password_error = "Please enter a password"
-        password_error = ""
+        password = ""
     else:
         if len(password)>20 or len(password)<3:
             password_error = "Password must be between 3 and 20 characters"
@@ -67,7 +67,7 @@ def validate_form():
 
 
 
-    if not username_error and not password_error:
+    if not password_error and not username_error:
         return "success" 
 
     else:
