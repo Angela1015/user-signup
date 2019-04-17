@@ -41,10 +41,39 @@ def validate_form():
 
     username = request.form['username']
     password = request.form['password']
-    verify_password = request.form['verify_password']
+    verify_password = request.form['verify_password']    
     email = request.form['email']
+    
+    username_error = ""
+    password_error = ""
+    verify_password_error = ""
+    email_error = ""
+
+    if username =="":
+        username_error = "Please enter a name"
+        username = ""
+    else:
+        if len(username)>20 or len(username)<3:
+            username_error = "Username must be between 3 and 20 characters"
+            username = ""
+
+    if password =="":
+        password_error = "Please enter a password"
+        password_error = ""
+    else:
+        if len(password)>20 or len(password)<3:
+            password_error = "Password must be between 3 and 20 characters"
+            password = ""       
 
 
+
+    if not username_error and not password_error:
+        return "success" 
+
+    else:
+        return user_signup_form.format(username=username,username_error=username_error,password=password,password_error=password_error,
+      verify_password=verify_password,verify_password_error=verify_password_error,email=email,email_error=email_error)    
+    
 app.run()
 
 @app.route('/')
