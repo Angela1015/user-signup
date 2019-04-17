@@ -82,7 +82,10 @@ def validate_form():
         if hasSpace:
              password_error = "Password cannot contain spaces"
              password =""
-    if not password_error and not username_error:
+
+    if verify_password != password:
+        verify_password_error = "Must match password"
+    if not password_error and not username_error and not verify_password_error:
         return "success" 
 
 
