@@ -49,6 +49,9 @@ def validate_form():
     verify_password_error = ""
     email_error = ""
 
+    countcurly = email.count('@')
+    countdot = email.count(".")
+    
     if not username:
         username_error = "Please enter a name"
         
@@ -85,7 +88,13 @@ def validate_form():
 
     if verify_password != password:
         verify_password_error = "Must match password"
-    if not password_error and not username_error and not verify_password_error:
+     
+    
+     
+    if countcurly!=1 and countdot!=1:
+        email_error = "Email must contain one @ and one ."
+
+    if not password_error and not username_error and not verify_password_error and not email_error:
         return "success" 
 
 
