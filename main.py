@@ -51,24 +51,41 @@ def validate_form():
 
     if not username:
         username_error = "Please enter a name"
-        username = ""
+        
+    
+    elif len(username)>20 or len(username)<3:
+        username_error = "Username must be between 3 and 20 characters"
+       
+    
     else:
-        if len(username)>20 or len(username)<3:
-            username_error = "Username must be between 3 and 20 characters"
-            username =""
+        hasSpace = False
+        for char in username:
+            if char.isspace():
+                hasSpace = True               
+        if hasSpace:
+             username_error = "Username cannot contain spaces"
+            
 
     if not password:
         password_error = "Please enter a password"
         password = ""
+    
+    elif len(password)>20 or len(password)<3:
+        password_error = "Password must be between 3 and 20 characters"
+        password = ""       
+
     else:
-        if len(password)>20 or len(password)<3:
-            password_error = "Password must be between 3 and 20 characters"
-            password = ""       
-
-
-
+        hasSpace = False
+        for char in password:
+            if char.isspace():
+                hasSpace = True            
+        if hasSpace:
+             password_error = "Password cannot contain spaces"
+             password =""
     if not password_error and not username_error:
         return "success" 
+
+
 
     else:
         return user_signup_form.format(username=username,username_error=username_error,password=password,password_error=password_error,
