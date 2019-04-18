@@ -86,7 +86,8 @@ def validate_form():
 
 
     else:
-        return user_signup_form.format(username=username,username_error=username_error,password=password,password_error=password_error,
+        template = jinja_env.get_template("user_signup.html")
+        return template.render(username=username,username_error=username_error,password=password,password_error=password_error,
       verify_password=verify_password,verify_password_error=verify_password_error,email=email,email_error=email_error)    
     
 
