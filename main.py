@@ -1,41 +1,22 @@
-from flask import Flask, request
+from flask import Flask, request, redirect
 import cgi
 import os
+import jinja2
+
+template_dir = os.path.join(os.path.dirname(__file__),'templates')
+jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=True)
+ 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
 
 
-user_signup_form = """<!doctype html>
-<html>
-  <body>
-  <form method = "POST">
-    <label for = "username">Username:
-      <input id = "username" type ="text" name = "username"/>
-    </label>
-    <p class ="error">{username_error}</p>
-        <label for = "password">Password:
-      <input id = "password" type ="password" name = "password"/>
-    </label>
-    <p class ="error">{password_error}</p>
-    <label for = "verify password">Verify Password:
-      <input id = "verify_password" type="password" name = "verify_password"/>
-    </label>
-    <p class ="error">{verify_password_error}</p>
-    <label for = "email">Email (optional):
-      <input id = "email" type ="text" name="email"/>
-    </label>
-        <p class ="error">{email_error}</p>
-        <input type= "submit" value="Submit"/>
-        
-    </form>
-    </body>
-    </html>"""
+
 
 @app.route("/validate-signup")
 def display_signup():
-    return user_signup_form.format(username = "",username_error = "",password = "",password_error = "",verify_password = "",
-    verify_password_error = "",email = "",email_error = "")
+    template = jinja_env.get_template('user_signup.html')
+    return template.render()
 
 @app.route("/validate-signup", methods = ['POST'])
 def validate_form():
@@ -99,7 +80,8 @@ def validate_form():
                 email_error = "Email must contain one @ and one ."
         
     if not password_error and not username_error and not verify_password_error and not email_error:
-        return "success" 
+        name = username 
+        return redirect("/valid-signup?name={0}".format(name))
 
 
 
@@ -107,5 +89,11 @@ def validate_form():
         return user_signup_form.format(username=username,username_error=username_error,password=password,password_error=password_error,
       verify_password=verify_password,verify_password_error=verify_password_error,email=email,email_error=email_error)    
     
+
+@app.route("/valid-signup")
+def valid_signup():
+    name = request.args.get('name')
+    return '<h1>"Welcome, {0}!"</h>'.format(name)
+
 app.run()
 
