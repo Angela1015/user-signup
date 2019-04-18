@@ -92,9 +92,12 @@ def validate_form():
      
       
     if email:
-        if countcurly!=1 or countdot!=1:
-            email_error = "Email must contain one @ and one ."
-
+        if len(email)>20 or len(email)<3:
+            email_error = "Email must be between 3 and 20 characters"
+        else:
+            if countcurly!=1 or countdot!=1:
+                email_error = "Email must contain one @ and one ."
+        
     if not password_error and not username_error and not verify_password_error and not email_error:
         return "success" 
 
@@ -106,6 +109,3 @@ def validate_form():
     
 app.run()
 
-@app.route('/')
-def index():
-    return form
