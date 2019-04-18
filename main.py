@@ -1,5 +1,6 @@
 from flask import Flask, request
-
+import cgi
+import os
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
@@ -54,11 +55,11 @@ def validate_form():
     
     if not username:
         username_error = "Please enter a name"
-        
+        username = ""
     
     elif len(username)>20 or len(username)<3:
         username_error = "Username must be between 3 and 20 characters"
-       
+        username =""
     
     else:
         hasSpace = False
@@ -67,7 +68,7 @@ def validate_form():
                 hasSpace = True               
         if hasSpace:
              username_error = "Username cannot contain spaces"
-            
+             username =""
 
     if not password:
         password_error = "Please enter a password"
@@ -89,7 +90,7 @@ def validate_form():
     if verify_password != password:
         verify_password_error = "Must match password"
      
-    
+      
      
     if countcurly!=1 and countdot!=1:
         email_error = "Email must contain one @ and one ."
