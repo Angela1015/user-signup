@@ -91,9 +91,9 @@ def validate_form():
         verify_password_error = "Must match password"
      
       
-     
-    if countcurly!=1 and countdot!=1:
-        email_error = "Email must contain one @ and one ."
+    if email:
+        if countcurly!=1 or countdot!=1:
+            email_error = "Email must contain one @ and one ."
 
     if not password_error and not username_error and not verify_password_error and not email_error:
         return "success" 
