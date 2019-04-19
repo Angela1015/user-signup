@@ -40,7 +40,7 @@ def validate_form():
     
     elif len(username)>20 or len(username)<3:
         username_error = "Username must be between 3 and 20 characters"
-        username =""
+        username = ""
     
     else:
         hasSpace = False
@@ -49,15 +49,14 @@ def validate_form():
                 hasSpace = True               
         if hasSpace:
              username_error = "Username cannot contain spaces"
-             username =""
+             username = ""
 
     if not password:
         password_error = "Please enter a password"
-        password = ""
-    
+        
     elif len(password)>20 or len(password)<3:
         password_error = "Password must be between 3 and 20 characters"
-        password = ""       
+               
 
     else:
         hasSpace = False
@@ -66,18 +65,19 @@ def validate_form():
                 hasSpace = True            
         if hasSpace:
              password_error = "Password cannot contain spaces"
-             password =""
-
+             
     if verify_password != password:
-        verify_password_error = "Must match password"
+        verify_password_error = "Passwords must match"
      
       
     if email:
         if len(email)>20 or len(email)<3:
             email_error = "Email must be between 3 and 20 characters"
+            email = ""
         else:
             if countcurly!=1 or countdot!=1:
                 email_error = "Email must contain one @ and one ."
+                email = ""
         
     if not password_error and not username_error and not verify_password_error and not email_error:
         name = username 
@@ -91,10 +91,11 @@ def validate_form():
       verify_password=verify_password,verify_password_error=verify_password_error,email=email,email_error=email_error)    
     
 
-@app.route("/valid-signup")
+@app.route("/valid-signup",methods =['GET'])
 def valid_signup():
     name = request.args.get('name')
-    return '<h1>"Welcome, {0}!"</h>'.format(name)
+    template = jinja_env.get_template("welcome.html")
+    return template.render(name=name)
 
 app.run()
 
